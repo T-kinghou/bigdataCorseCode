@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大数据可视化</title>
+    <link rel="stylesheet" href="css/classDemo.css">
+</head>
+<body>
+<!--头部的盒子-->
+<header>
+    <h1>大数据可视化——职位分析项目</h1>
+    <div class="showTime"></div>
+</header>
+
+<section class="mainbox">
+    <!-- 左侧列 -->
+    <div class="column">
+        <div class="panel bar">
+            <h2>柱形图-岗位数量</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel line">
+            <h2>折线图-薪资走势</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel pie">
+            <h2>饼图-学历要求</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+    </div>
+
+    <!-- 中间列 -->
+    <div class="column">
+        <!--        数字模块-->
+        <div class="no">
+            <div class="no-hd">
+                <ul>                <li>1693798</li>
+                    <li>1329646</li>
+                </ul>        </div>        <div class="no-bd">
+            <ul>                <li>总职位需求人数</li>
+                <li>当前有效需求人数</li>
+            </ul>        </div>    </div>    <div class="map">
+        <div class="map1"></div>
+        <div class="map2"></div>
+    </div>
+    <!-- 右侧列 -->
+    <div class="column">
+        <div class="panel radar">
+            <h2>雷达图-技能需求</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel rank">
+            <h2>排行榜-热门企业</h2>
+            <div class="rank-list">
+                <div class="rank-item">
+                    <span class="rank-num">1</span>
+                    <span class="rank-name">腾讯</span>
+                    <span class="rank-value">245</span>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-num">2</span>
+                    <span class="rank-name">阿里巴巴</span>
+                    <span class="rank-value">235</span>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-num">3</span>
+                    <span class="rank-name">百度</span>
+                    <span class="rank-value">215</span>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-num">4</span>
+                    <span class="rank-name">字节跳动</span>
+                    <span class="rank-value">198</span>
+                </div>
+                <div class="rank-item">
+                    <span class="rank-num">5</span>
+                    <span class="rank-name">华为</span>
+                    <span class="rank-value">176</span>
+                </div>
+            </div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel trend">
+            <h2>趋势图-行业变化</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+    </div>
+</section>
+
+<script src="js/flexible.js"></script>
+<script src="js/echarts.min.js"></script>
+<script src="js/jquery.js"></script>
+<!-- 引入china.js是因为中国地图需要 -->
+<script src="js/china.js"></script>
+<script src="js/index.js"></script>
+
+<script>
+    var t = null;
+    t = setTimeout(time, 1000); //开始运行
+    function time() {
+        clearTimeout(t); //清除计时器
+        dt = new Date();
+        var y = dt.getFullYear();
+        var mt = dt.getMonth() + 1;
+        var day = dt.getDate();
+        var h = dt.getHours();
+        var m = dt.getMinutes();
+        var s = dt.getSeconds();
+        document.querySelector(".showTime").innerHTML = "当前时间：" + y + '年' + mt + '月' + day + '日 ' + h + '时' + m + '分' + s + '秒';
+        t = setTimeout(time, 1000); //设置定时器，循环运行
+    }
+</script>
+</body>
+</html>
