@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts多仪表盘</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+<div id="chart" style="width: 900px;height:600px;"></div>
+<script>
+    var myChart = echarts.init(document.getElementById('chart'));
+
+    var option = {
+        title: {
+            text: '网站性能监控仪表盘',
+            left: 'center'
+        },
+        tooltip: {
+            formatter: '{a} <br/>{b} : {c}'
+        },
+        grid: {
+            top: '10%',
+            bottom: '10%'
+        },
+        series: [
+            {
+                name: '页面加载速度',
+                type: 'gauge',
+                center: ['20%', '25%'],
+                radius: '90%',
+                min: 0,
+                max: 10,
+                splitNumber: 10,
+                axisLine: {
+                    lineStyle: {
+                        width: 10,
+                        color: [
+                            [0.3, '#67e0e3'],
+                            [0.7, '#37a2da'],
+                            [1, '#fd666d']
+                        ]
+                    }
+                },
+                pointer: {
+                    itemStyle: {
+                        color: 'auto'
+                    }
+                },
+                axisTick: {
+                    distance: -30,
+                    length: 8,
+                    lineStyle: {
+                        color: '#fff',
+                        width: 2
+                    }
+                },
+                splitLine: {
+                    distance: -30,
+                    length: 30,
+                    lineStyle: {
+                        color: '#fff',
+                        width: 4
+                    }
+                },
+                axisLabel: {
+                    color: 'inherit',
+                    distance: 40,
+                    fontSize: 12
+                },
+                detail: {
+                    valueAnimation: true,
+                    formatter: '{value} 秒',
+                    color: 'auto',
+                    fontSize: 18
+                },
+                data: [
+                    {
+                        value: 2.56,
+                        name: '加载时间'
+                    }
+                ]
+            },
+            {
+                name: 'CPU占用率',
+                type: 'gauge',
+                center: ['50%', '25%'],
+                radius: '90%',
+                min: 0,
+                max: 100,
+                splitNumber: 10,
+                axisLine: {
+                    lineStyle: {
+                        width: 10,
+                        color: [
+                            [0.3, '#67e0e3'],
+                            [0.7, '#37a2da'],
+                            [1, '#fd666d']
+                        ]
+                    }
+                },
+                pointer: {
+                    itemStyle: {
+                        color: 'auto'
+                    }
+                },
+                axisTick: {
+                    distance: -30,
+                    length: 8,
+                    lineStyle: {
+                        color: '#fff',
+                        width: 2
+                    }
+                },
+                splitLine: {
+                    distance: -30,
+                    length: 30,
+                    lineStyle: {
+                        color: '#fff',
+                        width: 4
+                    }
+                },
+                axisLabel: {
+                    color: 'inherit',
+                    distance: 40,
+                    fontSize: 12
+                },
+                detail: {
+                    valueAnimation: true,
+                    formatter: '{value}%',
+                    color: 'auto',
+                    fontSize: 18
+                },
+                data: [
+                    {
+                        value: 65.8,
+                        name: 'CPU占用'
+                    }
+                ]
+            },
+            {
+                name: '内存使用率',
+                type: 'gauge',
+                center: ['80%', '25%'],
+                radius: '90%',
+                min: 0,
+                max: 100,
+                splitNumber: 10,
+                axisLine: {
+                    lineStyle: {
+                        width: 10,
+                        color: [
+                            [0.3, '#67e0e3'],
+                            [0.7, '#37a2da'],
+                            [1, '#fd666d']
+                        ]
+                    }
+                },
+                pointer: {
+                    itemStyle: {
+                        color: 'auto'
+                    }
+                },
+                axisTick: {
+                    distance: -30,
+                    length: 8,
+                    lineStyle: {
+                        color: '#fff',
+                        width: 2
+                    }
+                },
+                splitLine: {
+                    distance: -30,
+                    length: 30,
+                    lineStyle: {
+                        color: '#fff',
+                        width: 4
+                    }
+                },
+                axisLabel: {
+                    color: 'inherit',
+                    distance: 40,
+                    fontSize: 12
+                },
+                detail: {
+                    valueAnimation: true,
+                    formatter: '{value}%',
+                    color: 'auto',
+                    fontSize: 18
+                },
+                data: [
+                    {
+                        value: 78.3,
+                        name: '内存使用'
+                    }
+                ]
+            },
+            {
+                name: '错误率',
+                type: 'gauge',
+                center: ['25%', '70%'],
+                radius: '90%',
+                min: 0,
+                max: 5,
+                splitNumber: 5,
+                progress: {
+                    show: true,
+                    width: 30
+                },
+                pointer: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        width: 30
+                    }
+                },
+                axisTick: {
+                    distance: -45,
+                    splitNumber: 5,
+                    lineStyle: {
+                        width: 2,
+                        color: '#999'
+                    }
+                },
+                splitLine: {
+                    distance: -52,
+                    length: 14,
+                    lineStyle: {
+                        width: 3,
+                        color: '#999'
+                    }
+                },
+                axisLabel: {
+                    distance: -20,
+                    color: '#999',
+                    fontSize: 12
+                },
+                anchor: {
+                    show: false
+                },
+                title: {
+                    show: false
+                },
+                detail: {
+                    valueAnimation: true,
+                    width: '60%',
+                    lineHeight: 40,
+                    borderRadius: 8,
+                    offsetCenter: [0, '30%'],
+                    fontSize: 18,
+                    fontWeight: 'bolder',
+                    formatter: '{value}%',
+                    color: 'auto'
+                },
+                data: [
+                    {
+                        value: 0.32,
+                        name: '错误率'
+                    }
+                ]
+            },
+            {
+                name: '服务器响应时间',
+                type: 'gauge',
+                center: ['75%', '70%'],
+                radius: '90%',
+                min: 0,
+                max: 2000,
+                splitNumber: 10,
+                axisLine: {
+                    lineStyle: {
+                        width: 14,
+                        color: [
+                            [0.2, '#5470c6'],
+                            [0.5, '#91cc75'],
+                            [0.8, '#fac858'],
+                            [1, '#ee6666']
+                        ]
+                    }
+                },
+                pointer: {
+                    length: '60%',
+                    width: 8,
+                    offsetCenter: [0, '5%']
+                },
+                axisTick: {
+                    splitNumber: 3,
+                    lineStyle: {
+                        color: '#aaa',
+                        width: 2
+                    },
+                    length: 10
+                },
+                splitLine: {
+                    length: 15,
+                    lineStyle: {
+                        color: '#aaa',
+                        width: 3
+                    }
+                },
+                axisLabel: {
+                    distance: 20,
+                    color: '#999',
+                    fontSize: 12
+                },
+                title: {
+                    fontSize: 14
+                },
+                detail: {
+                    valueAnimation: true,
+                    formatter: '{value} ms',
+                    color: 'auto',
+                    fontSize: 16,
+                    offsetCenter: [0, '40%']
+                },
+                data: [
+                    {
+                        value: 320,
+                        name: '响应时间'
+                    }
+                ]
+            }
+        ]
+    };
+
+    // 模拟动态数据刷新
+    setInterval(function() {
+        var randomLoadTime = (Math.random() * 3 + 1).toFixed(2);
+        var randomCpu = (Math.random() * 30 + 50).toFixed(1);
+        var randomMemory = (Math.random() * 20 + 70).toFixed(1);
+        var randomError = (Math.random() * 0.5).toFixed(2);
+        var randomResponse = Math.floor(Math.random() * 500 + 100);
+
+        option.series[0].data[0].value = randomLoadTime;
+        option.series[1].data[0].value = randomCpu;
+        option.series[2].data[0].value = randomMemory;
+        option.series[3].data[0].value = randomError;
+        option.series[4].data[0].value = randomResponse;
+
+        myChart.setOption(option, true);
+    }, 2000);
+
+    myChart.setOption(option);
+</script>
+</body>
+</html>

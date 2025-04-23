@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts词云图</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js"></script>
+</head>
+<body>
+<div id="chart" style="width: 900px;height:600px;"></div>
+<script>
+    var myChart = echarts.init(document.getElementById('chart'));
+
+    var data = [
+        {
+            name: '技术',
+            value: 10000,
+        },
+        {
+            name: '创新',
+            value: 8500
+        },
+        {
+            name: '人工智能',
+            value: 8200
+        },
+        {
+            name: '大数据',
+            value: 7800
+        },
+        {
+            name: '云计算',
+            value: 7200
+        },
+        {
+            name: '区块链',
+            value: 6000
+        },
+        {
+            name: '数字化转型',
+            value: 5800
+        },
+        {
+            name: '物联网',
+            value: 5600
+        },
+        {
+            name: '5G',
+            value: 5500
+        },
+        {
+            name: '机器学习',
+            value: 5300
+        },
+        {
+            name: '智能制造',
+            value: 5000
+        },
+        {
+            name: '虚拟现实',
+            value: 4700
+        },
+        {
+            name: '边缘计算',
+            value: 4500
+        },
+        {
+            name: '数据分析',
+            value: 4300
+        },
+        {
+            name: '数字孪生',
+            value: 4200
+        },
+        {
+            name: '网络安全',
+            value: 4000
+        },
+        {
+            name: '自动驾驶',
+            value: 3800
+        },
+        {
+            name: '量子计算',
+            value: 3600
+        },
+        {
+            name: '元宇宙',
+            value: 3500
+        },
+        {
+            name: '智慧城市',
+            value: 3300
+        },
+        {
+            name: '芯片',
+            value: 3100
+        },
+        {
+            name: '低代码',
+            value: 3000
+        },
+        {
+            name: '数据中心',
+            value: 2900
+        },
+        {
+            name: '算法',
+            value: 2800
+        },
+        {
+            name: '工业互联网',
+            value: 2700
+        },
+        {
+            name: '智能家居',
+            value: 2600
+        },
+        {
+            name: '数字货币',
+            value: 2500
+        },
+        {
+            name: '增强现实',
+            value: 2400
+        },
+        {
+            name: '微服务',
+            value: 2300
+        },
+        {
+            name: '容器化',
+            value: 2200
+        }
+    ];
+
+    var option = {
+        title: {
+            text: '2025年技术热词指数',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        series: [{
+            type: 'wordCloud',
+            shape: 'circle',
+            left: 'center',
+            top: 'center',
+            width: '80%',
+            height: '80%',
+            right: null,
+            bottom: null,
+            sizeRange: [12, 60],
+            rotationRange: [-90, 90],
+            rotationStep: 45,
+            gridSize: 8,
+            drawOutOfBound: false,
+            textStyle: {
+                fontFamily: 'sans-serif',
+                fontWeight: 'bold',
+                color: function () {
+                    return 'rgb(' +
+                        Math.round(Math.random() * 160) + ',' +
+                        Math.round(Math.random() * 160) + ',' +
+                        Math.round(Math.random() * 160) + ')';
+                }
+            },
+            emphasis: {
+                focus: 'self',
+                textStyle: {
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            data: data
+        }]
+    };
+
+    myChart.setOption(option);
+</script>
+</body>
+</html>

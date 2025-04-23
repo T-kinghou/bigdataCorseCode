@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts漏斗图</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+<div id="chart" style="width: 900px;height:600px;"></div>
+<script>
+    var myChart = echarts.init(document.getElementById('chart'));
+
+    var option = {
+        title: {
+            text: '电商用户转化漏斗分析',
+            subtext: '2025年第三季度数据',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c}万用户 ({d}%)'
+        },
+        legend: {
+            data: ['访问', '浏览商品', '加入购物车', '生成订单', '支付', '收货评价'],
+            top: 'bottom'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: { readOnly: false },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        series: [
+            {
+                name: '转化漏斗',
+                type: 'funnel',
+                left: '10%',
+                top: 60,
+                bottom: 60,
+                width: '80%',
+                min: 0,
+                max: 1000,
+                minSize: '0%',
+                maxSize: '100%',
+                sort: 'descending',
+                gap: 2,
+                label: {
+                    show: true,
+                    position: 'inside'
+                },
+                labelLine: {
+                    length: 10,
+                    lineStyle: {
+                        width: 1,
+                        type: 'solid'
+                    }
+                },
+                itemStyle: {
+                    borderColor: '#fff',
+                    borderWidth: 1
+                },
+                emphasis: {
+                    label: {
+                        fontSize: 20
+                    }
+                },
+                data: [
+                    { value: 980, name: '访问' },
+                    { value: 680, name: '浏览商品' },
+                    { value: 350, name: '加入购物车' },
+                    { value: 300, name: '生成订单' },
+                    { value: 240, name: '支付' },
+                    { value: 180, name: '收货评价' }
+                ]
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+</script>
+</body>
+</html>
