@@ -1,24 +1,62 @@
 // 柱状图模块1
 (function() {
 // 1实例化对象
-    var myChart = echarts.init(document.querySelector(".bar .chart"));
-
+//     var myChart = echarts.init(document.querySelector(".bar .chart"));
+    var myChart = echarts.init(document.querySelector(".line2 .chart"));
     // 2.指定配置项和数据
-    option = {
-        xAxis: {
-            type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    var option = {
+        tooltip: {
+            trigger: 'axis',
         },
-        yAxis: {
-            type: 'value'
+        legend: {
+            top: "0%",
+            data: ['Email', 'Union Ads'],
+            textStyle: {
+                color: "rgba(255,255,255,.5)",
+                fontSize: "12"
+            },
         },
-        series: [
+        grid: {
+            left: "5",
+            top: "30",
+            right: "10",
+            bottom: "10",
+            containLabel: true
+        },
+        xAxis: [
             {
-                data: [120, 200, 150, 80, 70, 110, 130],
-                type: 'bar'
+                type: 'category',
+                boundaryGap: false,
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
             }
         ],
-        color: ["#2f89cf"],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'Email',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name: 'Union Ads',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: [220, 182, 191, 234, 290, 330, 310]
+            }
+        ]
     };
 
 
