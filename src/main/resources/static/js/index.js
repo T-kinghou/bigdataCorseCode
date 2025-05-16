@@ -34,8 +34,11 @@
             {
                 type: 'value'
             }
+
         ],
+        offset:-5 ,
         series: [
+
             {
                 name: 'Email',
                 type: 'line',
@@ -56,7 +59,8 @@
                 },
                 data: [220, 182, 191, 234, 290, 330, 310]
             }
-        ]
+        ],
+
     };
 
 
