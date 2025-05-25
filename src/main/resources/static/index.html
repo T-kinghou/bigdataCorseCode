@@ -1,147 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大数据可视化</title>
-    <link rel="stylesheet" href="css/index.css">
+    <title>中国境内旅游大数据可视化</title>
+    <link rel="stylesheet" href="css/index2.css">
 </head>
 <body>
-<!--头部的盒子-->
+<!-- 头部区域 -->
 <header>
-    <h1>大数据可视化——职位分析项目</h1>
-    <div class="showTime"></div>
+    <div class="header-title">
+        <img src="images/china-icon.png" class="logo">
+        <h1>中国境内旅游大数据分析平台</h1>
+    </div>
+    <div class="header-info">
+        <div class="filter-box">
+            <select id="yearFilter">
+                <option value="all">全部年份</option>
+                <option value="2023">2023年</option>
+                <option value="2022">2022年</option>
+                <option value="2021">2021年</option>
+            </select>
+            <select id="seasonFilter">
+                <option value="all">全部季节</option>
+                <option value="spring">春季</option>
+                <option value="summer">夏季</option>
+                <option value="autumn">秋季</option>
+                <option value="winter">冬季</option>
+            </select>
+            <button id="filterBtn">筛选</button>
+        </div>
+        <div class="showTime"></div>
+    </div>
 </header>
 
-<section class="mainbox">
-    <!-- 左侧列 -->
-    <div class="column">
-        <div class="panel bar">
-            <h2>柱形图-岗位数量</h2>
-            <div class="chart"></div>
-            <div class="panel-footer"></div>
+<!-- 主体内容区域 -->
+<div class="main">
+    <!-- 左上 - 全国旅游热度地图 -->
+    <div class="panel map-panel">
+        <div class="panel-header">
+            <h2><i class="icon-map"></i>全国旅游热度分布</h2>
+            <div class="panel-header-right">
+                <span id="mapUpdateTime">--</span>
+            </div>
         </div>
-        <div class="panel line">
-            <h2>折线图-薪资走势</h2>
-            <div class="chart"></div>
-            <div class="panel-footer"></div>
-        </div>
-        <div class="panel pie">
-            <h2>饼图-学历要求</h2>
-            <div class="chart"></div>
-            <div class="panel-footer"></div>
-        </div>
+        <div class="panel-body" id="mapChart"></div>
     </div>
 
-    <!-- 中间列 -->
-    <div class="column">
-        <!-- 数据概览区域 -->
-        <div class="panel overview">
-            <h2>核心指标</h2>
-            <div class="overview-box">
-                <div class="overview-item">
-                    <h4>职位总数</h4>
-                    <p class="counter">12,526</p>
-                </div>
-                <div class="overview-item">
-                    <h4>平均薪资</h4>
-                    <p class="counter">11,860</p>
-                </div>
-                <div class="overview-item">
-                    <h4>热门城市</h4>
-                    <p class="counter">北京</p>
-                </div>
-                <div class="overview-item">
-                    <h4>企业数量</h4>
-                    <p class="counter">3,512</p>
+    <!-- 右上 - 核心指标 -->
+    <div class="panel overview-panel">
+        <div class="panel-header">
+            <h2><i class="icon-stats"></i>旅游核心指标</h2>
+            <div class="panel-header-right">
+                <span id="overviewUpdateTime">--</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="overview-item" id="totalTourists">
+                <div class="overview-icon tourist-icon"></div>
+                <div class="overview-content">
+                    <h3>国内游客总量</h3>
+                    <p class="counter">0</p>
+                    <div class="trend up">--</div>
                 </div>
             </div>
-            <div class="panel-footer"></div>
-        </div>
-
-        <!-- 中国地图区域 -->
-        <div class="panel map">
-            <h2>全国招聘分布图</h2>
-            <div class="chart"></div>
-            <div class="panel-footer"></div>
-        </div>
-
-        <!-- 词云图区域 -->
-        <div class="panel wordcloud">
-            <h2>热门技能词云</h2>
-            <div class="chart"></div>
-            <div class="panel-footer"></div>
-        </div>
-    </div>
-
-    <!-- 右侧列 -->
-    <div class="column">
-        <div class="panel radar">
-            <h2>雷达图-技能需求</h2>
-            <div class="chart"></div>
-            <div class="panel-footer"></div>
-        </div>
-        <div class="panel rank">
-            <h2>排行榜-热门企业</h2>
-            <div class="rank-list">
-                <div class="rank-item">
-                    <span class="rank-num">1</span>
-                    <span class="rank-name">腾讯</span>
-                    <span class="rank-value">245</span>
-                </div>
-                <div class="rank-item">
-                    <span class="rank-num">2</span>
-                    <span class="rank-name">阿里巴巴</span>
-                    <span class="rank-value">235</span>
-                </div>
-                <div class="rank-item">
-                    <span class="rank-num">3</span>
-                    <span class="rank-name">百度</span>
-                    <span class="rank-value">215</span>
-                </div>
-                <div class="rank-item">
-                    <span class="rank-num">4</span>
-                    <span class="rank-name">字节跳动</span>
-                    <span class="rank-value">198</span>
-                </div>
-                <div class="rank-item">
-                    <span class="rank-num">5</span>
-                    <span class="rank-name">华为</span>
-                    <span class="rank-value">176</span>
+            <div class="overview-item" id="totalIncome">
+                <div class="overview-icon income-icon"></div>
+                <div class="overview-content">
+                    <h3>旅游总收入</h3>
+                    <p class="counter">0</p>
+                    <div class="trend up">--</div>
                 </div>
             </div>
-            <div class="panel-footer"></div>
-        </div>
-        <div class="panel trend">
-            <h2>趋势图-行业变化</h2>
-            <div class="chart"></div>
-            <div class="panel-footer"></div>
+            <div class="overview-item" id="avgConsume">
+                <div class="overview-icon consume-icon"></div>
+                <div class="overview-content">
+                    <h3>人均消费</h3>
+                    <p class="counter">0</p>
+                    <div class="trend">--</div>
+                </div>
+            </div>
+            <div class="overview-item" id="hotDestination">
+                <div class="overview-icon hot-icon"></div>
+                <div class="overview-content">
+                    <h3>热门目的地</h3>
+                    <p class="counter">--</p>
+                    <div class="trend">--</div>
+                </div>
+            </div>
         </div>
     </div>
-</section>
 
-<script src="js/flexible.js"></script>
-<script src="js/echarts.min.js"></script>
+    <!-- 左中 - 景区类型占比 -->
+    <div class="panel pie-panel">
+        <div class="panel-header">
+            <h2><i class="icon-pie-chart"></i>景区类型占比</h2>
+            <div class="panel-header-right">
+                <span id="pieChartUpdateTime">--</span>
+            </div>
+        </div>
+        <div class="panel-body" id="pieChart"></div>
+    </div>
+
+    <!-- 右中 - 旅游热门景点排行 -->
+    <div class="panel rank-panel">
+        <div class="panel-header">
+            <h2><i class="icon-rank"></i>热门景点排行</h2>
+            <div class="panel-header-right">
+                <span id="rankUpdateTime">--</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="rank-list" id="rankList">
+                <!-- 动态生成排行榜内容 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 左下 - 客流量趋势 -->
+    <div class="panel line-panel">
+        <div class="panel-header">
+            <h2><i class="icon-line-chart"></i>年度客流量趋势</h2>
+            <div class="panel-header-right">
+                <span id="lineChartUpdateTime">--</span>
+            </div>
+        </div>
+        <div class="panel-body" id="lineChart"></div>
+    </div>
+
+    <!-- 中下 - 旅游方式统计 -->
+    <div class="panel bar-panel">
+        <div class="panel-header">
+            <h2><i class="icon-bar-chart"></i>旅游方式统计</h2>
+            <div class="panel-header-right">
+                <span id="barChartUpdateTime">--</span>
+            </div>
+        </div>
+        <div class="panel-body" id="barChart"></div>
+    </div>
+
+    <!-- 右下 - 热门景点词云 -->
+    <div class="panel wordcloud-panel">
+        <div class="panel-header">
+            <h2><i class="icon-cloud"></i>热门景点词云</h2>
+            <div class="panel-header-right">
+                <span id="wordcloudUpdateTime">--</span>
+            </div>
+        </div>
+        <div class="panel-body" id="wordcloudChart"></div>
+    </div>
+</div>
+
+<!-- 底部控制栏 -->
+<footer>
+    <div class="footer-left">
+        <div class="data-source">数据来源：文化和旅游部、各省市旅游局</div>
+    </div>
+    <div class="footer-right">
+        <button id="refreshBtn" class="control-btn"><i class="icon-refresh"></i>刷新数据</button>
+        <button id="exportBtn" class="control-btn"><i class="icon-download"></i>导出数据</button>
+        <button id="fullscreenBtn" class="control-btn"><i class="icon-fullscreen"></i>全屏显示</button>
+    </div>
+</footer>
+
+<!-- 加载动画 -->
+<div class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>数据加载中...</p>
+</div>
+
 <script src="js/jquery.js"></script>
-<!-- 引入china.js是因为中国地图需要 -->
+<script src="js/echarts.min.js"></script>
+<script src="js/echarts-wordcloud.js"></script>
 <script src="js/china.js"></script>
 <script src="js/index.js"></script>
-
-<script>
-    var t = null;
-    t = setTimeout(time, 1000); //开始运行
-    function time() {
-        clearTimeout(t); //清除计时器
-        dt = new Date();
-        var y = dt.getFullYear();
-        var mt = dt.getMonth() + 1;
-        var day = dt.getDate();
-        var h = dt.getHours();
-        var m = dt.getMinutes();
-        var s = dt.getSeconds();
-        document.querySelector(".showTime").innerHTML = "当前时间：" + y + '年' + mt + '月' + day + '日 ' + h + '时' + m + '分' + s + '秒';
-        t = setTimeout(time, 1000); //设置定时器，循环运行
-    }
-</script>
 </body>
 </html>
