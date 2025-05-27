@@ -11,10 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+<<<<<<< HEAD
 /**
  * @author 侯贻达
  * version 1.0
  */
+=======
+
+>>>>>>> origin/master
 @Service
 public class TourismServiceImpl implements TourismService {
 

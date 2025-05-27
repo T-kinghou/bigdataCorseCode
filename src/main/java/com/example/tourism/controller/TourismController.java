@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+<<<<<<< HEAD
 /**
  * @author 侯贻达
  * version 1.0
  */
+=======
+
+>>>>>>> origin/master
 @RestController
 @RequestMapping("/api/tourism")
 public class TourismController {
