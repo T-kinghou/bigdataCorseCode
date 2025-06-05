@@ -1,7 +1,7 @@
 package com.hyd.tourism.service;
 
 import com.hyd.tourism.dto.*;
-
+//service层修改
 public interface TourismService {
     MapDataDTO getMapData(String year, String season);
     ScenicTypeDTO getScenicTypes(String year, String season);
