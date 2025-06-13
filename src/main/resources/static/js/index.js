@@ -1,4 +1,30 @@
 $(function() {
+
+    if (!localStorage.getItem('token')) {
+        window.location.href = 'login.html';
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr) {
+            const token = localStorage.getItem('token');
+            if (token) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+            }
+        },
+        timeout: 30000,
+        error: handleAjaxError
+    });
+
+    function handleAjaxError(xhr, status, error) {
+        if (xhr.status === 401) {
+            alert('登录已过期，请重新登录');
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+            return;
+        }
+        // 其他错误处理...
+    }
+
     // API基础URL，根据您的SpringBoot应用设置
     const API_BASE_URL = 'http://localhost:8081/api';
 

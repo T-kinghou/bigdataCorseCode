@@ -13,13 +13,24 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // 校验用户名和密码
     @Override
     public boolean validateUser(String username, String password) {
         User user = userRepository.findByUsername(username);
         if (user == null) return false;
-        // 密码MD5加密后比对
         return user.getPassword().equals(md5(password));
+    }
+
+    @Override
+    public void register(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(md5(password));
+        userRepository.save(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     // MD5加密
