@@ -1,10 +1,10 @@
 // 柱状图模块1
 (function() {
 // 1实例化对象
-    const myChartb1 = echarts.init(document.querySelector(".bar .chart"));
+    const myChart = echarts.init(document.querySelector(".bar .chart"));
 
 // 2.指定配置项和数据
-    let optionb1 = {
+    let option = {
 
         tooltip: {
             trigger: 'axis',
@@ -97,16 +97,18 @@
         },
     };
     // 3.将配置项给实例对象
-    myChartb1.setOption(optionb1)
+    myChart.setOption(option);
+
+//前端调用后端接口
     var xdata2 = [];//x轴
     var sData = []; // value
-    $.getJSON('http://localhost:8080/view/getInstryData', function (data) {
+    $.getJSON('http://localhost:8081/api/view/getIndustryData', function (data) {
         var arr = data.data
         for (var i = 0; i < arr.length; i++) {
             xdata2.push(arr[i].ind_name)
             sData.push(arr[i].value)
         }
-        myChartb1.setOption({
+        myChart.setOption({
             series:[{
                 data: sData
             }],
@@ -116,14 +118,12 @@
         })
     });
 
-    //随着浏览器自适应变化效果；
-    window.addEventListener("resize",function () {
-        myChartb1.resize();
-        console.log("监控窗口变化，实现图形自适应窗口大小");
+//让图标跟随屏幕去自动适应
+    window.addEventListener("resize",function(){
+        myChart.resize();
     })
 })();
-
-// 条形图【柱状图2】
+// 条形图【柱状图2】-热门岗位
 (function (){
     // 1. 实例化对象
     const myChartbar2= echarts.init(document.querySelector(".bar2 .chart"));
@@ -141,6 +141,7 @@
         },
         xAxis: {
             show: false,
+
         },
         yAxis: [
             {
@@ -165,6 +166,7 @@
             {
                 show: true,
                 inverse: true,
+                offset: -25, // 调整此值可控制数值向左/右移动
                 data: [19325, 23438, 31000, 121594, 134141, 681807],
                 axisLine: { show: false },
                 axisTick: { show: false },
@@ -192,7 +194,8 @@
                         return myColor[params.dataIndex];
                     }
                 },
-                // 柱子之间的距离 50        // barCategoryGap: '5%',        // 柱子的宽度
+                // 柱子之间的距离 50        //
+                barCategoryGap: '5%',        // 柱子的宽度
                 barWidth: 20,
                 // 柱子标签定制
                 label: {
@@ -212,20 +215,21 @@
                 itemStyle: {
                     color: "none",
                     borderColor: "#00c1de",
-                    borderWidth: 3,
+                    borderWidth: 0,
                     barBorderRadius: 15,
                 }
             }
         ]
     };
 
-    // 3. 把配置给实例对象
+// 3. 把配置给实例对象
     myChartbar2.setOption(optionbar2);
+
     //前端调用后端接口
     var yAxis1 = [];//yAxis第一个对象
     var yAxis2 = [];//yAxis第二个对象
     var series1 = [];//series第二个对象
-    $.getJSON('http://localhost:8080/view/getJobItemData', function (data) {
+    $.getJSON('http://localhost:8081/api/view/getJobItemData', function (data) {
         var arr = data.data
         for (var i = 0; i < arr.length; i++) {
             yAxis1.push(arr[i].job_name);
@@ -248,17 +252,16 @@
         })
     });
 
-    //图形跟随浏览器显示自动缩放大小
-    window.addEventListener("resize",function () {
+    //4. 让图标跟随屏幕去自动适应
+    window.addEventListener("resize",function(){
         myChartbar2.resize();
-        console.log("监控窗口变化，实现图形自适应窗口大小");
-    })
+    });
 })();
-
 // 折线图1模块制作
 (function() {
 // 1. 实例化对象
     const myChartl1 = echarts.init(document.querySelector(".line .chart"));
+    myChartl1.resize(); // 初始化后强制适应尺寸
     var yearData = [
         {
             year: '2024', // 年份
@@ -348,49 +351,7 @@
             }
         ]
     };
-    myChartl1.setOption(optionl1);
-    //前端调用后端接口
-    var xAxis1 = [];//xAxis第一个对象
-    var series1 = [];//series第一个对象
-    var series2 = [];//series第二个对象
-    var llabel1 = []; //legend类别1
-    var llabel2 = []; //legend类别2
-    $.getJSON('http://localhost:8080/view/getJobMChange', function (data) {
-        var arr = data.data
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].type =='01') {
-                xAxis1.push(arr[i].date);
-                series2.push(arr[i].count);
-                llabel1 = arr[i].type;
-            }
-            else if (arr[i].type =='12') {
-                series1.push(arr[i].count)
-                llabel2 = arr[i].type;
-            }
-        }
-        myChartl1.setOption({
-            xAxis:[{
-                data: xAxis1
-            }
-            ],
-            legend: {data: [llabel1, llabel2],},
-            series:[{
-                data: series1,
-                name: llabel1,
-            },
-                {
-                    name: llabel2,
-                    data: series2
-                }
-            ]
-        })
-    });
 
-// 监听窗口大小变化
-    window.addEventListener('resize', function () {
-        myChartl1.resize();
-        console.log("监控窗口变化，实现图形自适应窗口大小");
-    });
     // 5.点击切换效果
     $(".line h2").on("click", "a", function() {
         //alert(1);
@@ -401,14 +362,59 @@
 // 需要重新渲染
         myChartl1.setOption(optionl1);
     });
+    myChartl1.setOption(optionl1);
+    //前端调用后端接口
+    var year_2022_1 = [];//2022年第一个对象
+    var year_2022_2 = [];//2022年第二个对象
+    var year_2023_1 = [];//2023年第一个对象
+    var year_2023_2 = [];//2023年第二个对象
 
+    $.getJSON('http://localhost:8081/api/view/getJobSupplierDemanderData', function (data) {
+
+        var arr = data.data
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].type ==0 && (arr[i].date.substr(0,4)=='2022')) {
+                year_2022_1.push(arr[i].count)
+            }
+            else if (arr[i].type ==1 && (arr[i].date.substr(0,4)=='2022')) {
+                year_2022_2.push(arr[i].count)
+            }
+            else if (arr[i].type ==0 && (arr[i].date.substr(0,4)=='2023')) {
+                year_2023_1.push(arr[i].count)
+            }
+            else if (arr[i].type ==1 && (arr[i].date.substr(0,4)=='2023')) {
+                year_2023_2.push(arr[i].count)
+            }
+        }
+
+//****************mine
+        yearData[0].data=[year_2022_1, year_2022_2];
+        yearData[1].data=[year_2023_1, year_2023_2];
+//****************mine
+
+        myChartl1.setOption({
+
+            series:[{
+                data: year_2022_1
+            },
+                {
+                    data: year_2022_2
+                }
+            ]
+        })
+    });
+
+    //4.让图标跟随屏幕去自动适应
+    window.addEventListener("resize",function(){
+        myChartl1.resize();
+    });
 })();
 // 折线图2 模块制作
 (function() {
 // 1. 实例化对象
-    const myChart2 = echarts.init(document.querySelector(".line2 .chart"));
+    const myChartline2 = echarts.init(document.querySelector(".line2 .chart"));
 // 2.指定配置
-    let option2 = {
+    let optionline2 = {
         tooltip: {
             trigger: 'axis',
         },
@@ -440,7 +446,7 @@
                         fontSize: 12
                     }
                 },
-                    // x轴线的颜色为 rgba(255,255,255,.2)
+                // x轴线的颜色为 rgba(255,255,255,.2)
                 axisLine: {
                     lineStyle: {
                         color: "rgba(255,255,255,.6)"
@@ -448,7 +454,7 @@
 
                 },
             }
-            ],
+        ],
         yAxis: [
             {
                 type: 'value',
@@ -570,43 +576,40 @@
         ]
     };
 // 3. 把配置给实例对象
-    myChart2.setOption(option2);
-    //前端调用后端接口
-    var year_2022_1 = [];//2022年第一个对象
-    var year_2022_2 = [];//2022年第二个对象
-    var year_2023_1 = [];//2023年第一个对象
-    var year_2023_2 = [];//2023年第二个对象
+    myChartline2.setOption(optionline2);
 
-    $.getJSON('http://localhost:8080/view/getJobSupplierDemanderData', function (data) {
-
+//前端调用后端接口
+    var xAxis1 = [];//xAxis第一个对象
+    var series1 = [];//series第一个对象
+    var series2 = [];//series第二个对象
+    var llabel1 = []; //legend类别1
+    var llabel2 = []; //legend类别2
+    $.getJSON('http://localhost:8081/api/view/getJobMChange', function (data) {
         var arr = data.data
         for (var i = 0; i < arr.length; i++) {
-            if (arr[i].type ==0 && (arr[i].date.substr(0,4)=='2022')) {
-                year_2022_1.push(arr[i].count)
+            if (arr[i].type =='01') {
+                xAxis1.push(arr[i].date);
+                series2.push(arr[i].count);
+                llabel1 = arr[i].type;
             }
-            else if (arr[i].type ==1 && (arr[i].date.substr(0,4)=='2022')) {
-                year_2022_2.push(arr[i].count)
-            }
-            else if (arr[i].type ==0 && (arr[i].date.substr(0,4)=='2023')) {
-                year_2023_1.push(arr[i].count)
-            }
-            else if (arr[i].type ==1 && (arr[i].date.substr(0,4)=='2023')) {
-                year_2023_2.push(arr[i].count)
+            else if (arr[i].type =='12') {
+                series1.push(arr[i].count)
+                llabel2 = arr[i].type;
             }
         }
-
-//****************mine
-        yearData[0].data=[year_2022_1, year_2022_2];
-        yearData[1].data=[year_2023_1, year_2023_2];
-//****************mine
-
-        myChart2.setOption({
-
+        myChartline2.setOption({
+            xAxis:[{
+                data: xAxis1
+            }
+            ],
+            legend: {data: [llabel1, llabel2],},
             series:[{
-                data: year_2022_1
+                data: series1,
+                name: llabel1,
             },
                 {
-                    data: year_2022_2
+                    name: llabel2,
+                    data: series2
                 }
             ]
         })
@@ -614,18 +617,17 @@
 
     //4. 让图标跟随屏幕去自动适应
     window.addEventListener("resize",function(){
-        myChart2.resize();
+        myChartline2.resize();
     });
 })();
-
-
 // 饼形图1
 (function() {
 // 1. 实例化对象
-    const myChartpie1 = echarts.init(document.querySelector(".pie .chart"));
+    const myChart = echarts.init(document.querySelector(".pie .chart"));
 
 // 2.指定配置
-    let optionpie1 = {
+    // 2.指定配置
+    var option = {
         tooltip: {
             trigger: 'item'
         },
@@ -646,17 +648,12 @@
             {
                 name: '工龄分布',
                 type: 'pie',
-
-                // 修改内圆半径和外圆半径为 百分比是相对于容器宽度来说的
-                radius: ["40%", "60%"],
-
+                radius: ['40%', '60%'],
                 avoidLabelOverlap: false,
                 label: {
-                    // 不显示标签文字
                     show: false,
                     position: 'center'
                 },
-
                 emphasis: {
                     label: {
                         show: true,
@@ -674,46 +671,39 @@
                     { value: 2, name: "3-5年" },
                     { value: 2, name: "5-10年" },
                     { value: 1, name: "10年以上" }
-
                 ],
-                // 设置饼形图在容器中的位置
-                center: ["50%", "50%"],
-                // 更换颜色
+// 设置饼形图在容器中的位置
+                center: ["50%", "40%"],
                 color: ["#065aab", "#066eab", "#0682ab", "#0696ab", "#06a0ab"],
             }
-
         ]
-
     };
 
+
 // 3. 把配置给实例对象
-    myChartpie1.setOption(optionpie1);
+    myChart.setOption(option)
+
     //前端调用后端接口
-    $.getJSON('http://localhost:8080/view/getSalRangeData', function (data) {
-        myChartpie1.setOption({
+    $.getJSON('http://localhost:8081/api/view/getSalRangeData', function (data) {
+        myChart.setOption({
             series:[{
                 data: data.data
             }]
         })
     });
-
-
-// 4. 让图表跟随屏幕自动的去适应
+    // 4. 让图表跟随屏幕自动的去适应
     window.addEventListener("resize", function() {
-        myChartpie1.resize();
+        myChart.resize();
     });
 
 })();
-
 // 饼形图2-南丁格尔玫瑰图
 (function() {
 // 1. 实例化对象
     const myChartpie2 = echarts.init(document.querySelector(".pie2 .chart"));
 
 // 2.指定配置
-
-    const optionpie2 = {
-
+    let optionpie2 = {
         series: [
             {
                 name: 'Nightingale Chart',
@@ -730,29 +720,26 @@
                     { value: 25, name: '浙江' },
                     { value: 30, name: '四川' },
                     { value: 42, name: '湖北' }
-
                 ],
-
                 // 自定义颜色
                 color: ['#006cff', '#60cda0', '#ed8884', '#ff9f7f', '#0096ff', '#9fe6b8', '#32c5e9','#1d9dff'],
                 // 修改饼图大小
                 radius: ['10%', '70%'],
                 // 饼图显示模式：半径模式
                 roseType: "radius",
-                // 居中显示
+// 居中显示
                 center: ['50%', '50%'],
+                // 文本标签控制饼形图文字的相关样式， 注意它是一个对象
                 label: {
-                    fontSize: 15,
+                    fontSize: 14,
                 },
                 // 链接图形和文字的线条
                 labelLine: {
                     // length 链接图形的线条
                     length: 12,
                     // length2 链接文字的线条
-                    length2: 8
+                    length2: 8,
                 },
-
-
             }
         ]
     };
@@ -760,32 +747,18 @@
     // 3. 把配置给实例对象
     myChartpie2.setOption(optionpie2)
     //前端调用后端接口
-    $.ajax({
-        url: 'http://localhost:8080/view/getAreaData',
-        type: 'GET',
-        dataType: 'json',
-        xhrFields: {
-            withCredentials: true // 允许携带凭证
-        },
-        success: function(data) {
-            myChartpie2.setOption({
-                series: [{
-                    data: data.data
-                }]
-            });
-        },
-        error: function(error) {
-            console.error('请求失败:', error);
-        }
+    $.getJSON('http://localhost:8081/api/view/getAreaData', function (data) {
+        myChartpie2.setOption({
+            series:[{
+                data: data.data
+            }]
+        })
     });
-
-    // 4. 让图表跟随屏幕自动的去适应
+// 4. 让图表跟随屏幕自动的去适应
     window.addEventListener("resize", function() {
         myChartpie2.resize();
     });
 })();
-
-
 // 模拟飞行路线模块地图模块
 (function() {
 // 1. 实例化对象
@@ -933,8 +906,8 @@
     ];
 
     //飞机图片样式
-    //var planePath = "path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z";
-    var planePath = 'arrow';
+    var planePath = "path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z";
+    //var planePath = 'arrow';
 
     // 飞机出发地到目的地的数据转化
     var convertData = function(data) {
@@ -964,7 +937,7 @@
         ["上海", YCData]
     ].forEach(function(item, i) {
         //第一个series 设置飞机路线的特效
-
+        //第二个series 设置地图点的特效
         series.push(
             {
                 name: item[0] + " Top3",
@@ -1115,6 +1088,8 @@
         myChart.resize();
     });
 
-
 })();
+
+
+
 

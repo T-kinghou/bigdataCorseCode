@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<div class="center-box">
+    <div class="login-container">
+        <h2>用户登录</h2>
+        <input type="text" id="username" placeholder="用户名" autocomplete="username">
+        <input type="password" id="password" placeholder="密码" autocomplete="current-password">
+        <button id="loginBtn">登录</button>
+        <div id="loginMsg"></div>
+        <div class="link-area">
+            没有账号？<a href="register.html">去注册</a>
+        </div>
+    </div>
+</div>
+<script src="js/jquery.js"></script>
+<script>
+    $('#loginBtn').click(function() {
+        var username = $('#username').val().trim();
+        var password = $('#password').val().trim();
+        if (!username || !password) {
+            $('#loginMsg').text('请输入用户名和密码');
+            return;
+        }
+        $.post('http://localhost:8081/api/auth/login', {
+            username: username,
+            password: password
+        }, function(res) {
+            if (res.code === 200) {
+                localStorage.setItem('token', res.data.token);
+                window.location.href = 'index.html';
+            } else {
+                $('#loginMsg').text(res.message || '登录失败');
+            }
+        }).fail(function() {
+            $('#loginMsg').text('登录请求失败');
+        });
+    });
+
+    // 回车键登录
+    $(document).keydown(function(e){
+        if(e.key === "Enter") $('#loginBtn').click();
+    });
+</script>
+</body>
+</html>

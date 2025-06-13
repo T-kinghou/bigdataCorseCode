@@ -432,6 +432,18 @@ $(function() {
                     mapData = res.data;
                 }
 
+                // 省份列表
+                const allProvinces = [
+                    "北京", "天津", "上海", "重庆", "河北", "山西", "辽宁", "吉林", "黑龙江",
+                    "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南", "湖北", "湖南",
+                    "广东", "海南", "四川", "贵州", "云南", "陕西", "甘肃", "青海", "台湾",
+                    "内蒙古", "广西", "西藏", "宁夏", "新疆", "香港", "澳门"
+                ];
+
+
+                console.log('地图数据原始响应:', JSON.stringify(res));
+
+                console.log('mapData:', mapData)
                 // 处理重复省份数据
                 const provinceMap = new Map();
                 mapData.forEach(item => {
@@ -444,12 +456,12 @@ $(function() {
                     }
                 });
 
-                // 转换回数组
-                const uniqueData = Array.from(provinceMap.entries()).map(([name, value]) => ({
-                    name: name,
-                    value: value
+                // 补全所有省份
+                const uniqueData = allProvinces.map(name => ({
+                    name,
+                    value: provinceMap.get(name) || 0
                 }));
-
+                console.log('最终用于渲染的数据:', uniqueData);
                 // 找出最大值用于可视化范围设置
                 const maxValue = Math.max(...uniqueData.map(item => item.value));
 
@@ -544,7 +556,13 @@ $(function() {
 
                 const option = charts.lineChart.getOption();
                 option.xAxis.data = trendData.months || [];
-                option.series = trendData.series || [];
+                option.series = (trendData.series || []).map(ser => ({
+
+                    ...ser,
+
+                    label: { show: true, position: 'top', color: '#fff' }
+
+                }));
                 charts.lineChart.setOption(option);
                 updateTime('#lineChartUpdateTime', res.timestamp || new Date().getTime());
             },

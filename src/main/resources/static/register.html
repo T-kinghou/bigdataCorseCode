@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<div class="center-box">
+    <div class="login-container">
+        <h2>用户注册</h2>
+        <input type="text" id="reg-username" placeholder="用户名">
+        <input type="password" id="reg-password" placeholder="密码">
+        <button id="registerBtn">注册</button>
+        <div id="registerMsg"></div>
+        <div class="link-area">
+            已有账号？<a href="login.html">去登录</a>
+        </div>
+    </div>
+</div>
+<script src="js/jquery.js"></script>
+<script>
+    $('#registerBtn').click(function() {
+        var username = $('#reg-username').val().trim();
+        var password = $('#reg-password').val().trim();
+        if (!username || !password) {
+            $('#registerMsg').text('请输入用户名和密码');
+            return;
+        }
+        $.post('http://localhost:8081/api/auth/register', {
+            username: username,
+            password: password
+        }, function(res) {
+            if (res.code === 200) {
+                $('#registerMsg').css('color','green').text('注册成功，请登录');
+                setTimeout(function(){ window.location.href = 'login.html'; }, 1000);
+            } else {
+                $('#registerMsg').css('color','red').text(res.message || '注册失败');
+            }
+        }).fail(function() {
+            $('#registerMsg').css('color','red').text('注册请求失败');
+        });
+    });
+
+    // 回车键注册
+    $(document).keydown(function(e){
+        if(e.key === "Enter") $('#registerBtn').click();
+    });
+</script>
+</body>
+</html>
