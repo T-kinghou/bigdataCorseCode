@@ -297,6 +297,17 @@ $(function() {
                         alignWithLabel: true
                     },
                     axisLabel: {
+                        // formatter: function(value) {
+                        //     // 每三个字符换一行
+                        //     if (value.length > 3) {
+                        //         const result = [];
+                        //         for (let i = 0; i < value.length; i += 3) {
+                        //             result.push(value.substring(i, i + 3));
+                        //         }
+                        //         return result.join('\n');
+                        //     }
+                        //     return value;
+                        // },
                         color: 'rgba(255,255,255,.6)',
                         interval: 0,
                         rotate: 40
